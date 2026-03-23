@@ -6,7 +6,6 @@ import { Container } from '../components/layout/Container';
 import { Tag } from '../components/ui/Tag';
 import { ReadingProgress } from '../components/post/ReadingProgress';
 import { fetchPostById } from '../services/api';
-import { motion } from 'framer-motion';
 import { ArrowLeft, ExternalLink, Calendar, Clock } from 'lucide-react';
 
 const PostPage = () => {
@@ -54,9 +53,9 @@ const PostPage = () => {
         <Navbar />
         <Container maxWidth="content" className="flex-grow pt-32 pb-12 flex items-center justify-center">
           <div className="flex space-x-2 justify-center items-center">
-            <div className="h-3 w-3 bg-light-accent dark:bg-dark-accent rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-            <div className="h-3 w-3 bg-light-accent dark:bg-dark-accent rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-            <div className="h-3 w-3 bg-light-accent dark:bg-dark-accent rounded-full animate-bounce"></div>
+            <div className="h-3 w-3 bg-light-accent dark:bg-dark-accent rounded-full animate-pulse"></div>
+            <div className="h-3 w-3 bg-light-accent dark:bg-dark-accent rounded-full animate-pulse delay-75"></div>
+            <div className="h-3 w-3 bg-light-accent dark:bg-dark-accent rounded-full animate-pulse delay-150"></div>
           </div>
         </Container>
         <Footer />
@@ -69,13 +68,13 @@ const PostPage = () => {
       <div className="min-h-screen bg-light-bg dark:bg-dark-bg flex flex-col">
         <Navbar />
         <Container maxWidth="content" className="flex-grow pt-32 pb-12 flex items-center justify-center text-center">
-          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
+          <div>
             <h2 className="text-2xl font-bold mb-4">{error ? 'An error occurred' : 'Post not found'}</h2>
             <p className="text-light-text-secondary dark:text-dark-text-secondary">{error || 'The article you are looking for does not exist.'}</p>
             <Link to="/" className="mt-6 inline-flex items-center text-light-accent dark:text-dark-accent font-medium hover:underline">
               <ArrowLeft size={16} className="mr-2" /> Back to Home
             </Link>
-          </motion.div>
+          </div>
         </Container>
         <Footer />
       </div>
@@ -88,11 +87,7 @@ const PostPage = () => {
       <Navbar />
       <main className="pt-28 pb-16">
         <Container maxWidth="content">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
+          <div>
             <Link to="/" className="inline-flex items-center text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary hover:text-light-accent dark:hover:text-dark-accent mb-8 transition-colors group">
               <ArrowLeft size={16} className="mr-2 group-hover:-translate-x-1 transition-transform" />
               Back to articles
@@ -117,27 +112,17 @@ const PostPage = () => {
 
               {/* Cover image */}
               {post.imageUrl && (
-                <motion.div 
-                   initial={{ opacity: 0, scale: 0.95 }}
-                   animate={{ opacity: 1, scale: 1 }}
-                   transition={{ duration: 0.7, delay: 0.2 }}
-                   className="mb-12 rounded-2xl overflow-hidden shadow-2xl shadow-light-accent/10 dark:shadow-dark-accent/10"
-                >
+                <div className="mb-12 rounded-2xl overflow-hidden shadow-2xl shadow-light-accent/10 dark:shadow-dark-accent/10">
                   <img
                     src={post.imageUrl}
                     alt={post.title}
                     className="w-full h-auto object-cover max-h-[500px]"
                   />
-                </motion.div>
+                </div>
               )}
 
               {/* Content sections */}
-              <motion.div 
-                 initial={{ opacity: 0 }}
-                 animate={{ opacity: 1 }}
-                 transition={{ duration: 0.6, delay: 0.4 }}
-                 className="prose prose-lg sm:prose-xl prose-gray dark:prose-invert max-w-none text-light-text-secondary dark:text-dark-text-secondary"
-              >
+              <div className="prose prose-lg sm:prose-xl prose-gray dark:prose-invert max-w-none text-light-text-secondary dark:text-dark-text-secondary">
                 <section className="mb-12">
                   <h2 className="text-2xl font-bold text-light-text-primary dark:text-dark-text-primary mb-6 flex items-center">
                     <span className="w-8 h-1 bg-light-accent dark:bg-dark-accent rounded-full mr-4 inline-block"></span>
@@ -191,9 +176,9 @@ const PostPage = () => {
                     <ExternalLink size={18} />
                   </a>
                 </section>
-              </motion.div>
+              </div>
             </article>
-          </motion.div>
+          </div>
         </Container>
       </main>
       <Footer />

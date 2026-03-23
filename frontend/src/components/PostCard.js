@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Tag } from './ui/Tag';
-import { motion } from 'framer-motion';
 import { Calendar, Clock, ImageOff, ArrowRight } from 'lucide-react';
 
 const PostCard = ({ post }) => {
@@ -28,9 +27,8 @@ const PostCard = ({ post }) => {
   };
 
   return (
-    <motion.article 
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="group bg-light-surface dark:bg-dark-surface border border-light-border/50 dark:border-dark-border/50 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-light-accent/5 dark:hover:shadow-dark-accent/5 transition-all duration-300 flex flex-col h-full"
+    <article 
+      className="group bg-light-surface dark:bg-dark-surface border border-light-border/50 dark:border-dark-border/50 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-light-accent/5 dark:hover:shadow-dark-accent/5 transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full"
     >
       {post.imageUrl && !imageError ? (
         <div className="relative w-full h-52 bg-gray-100 dark:bg-gray-800 overflow-hidden">
@@ -41,11 +39,11 @@ const PostCard = ({ post }) => {
             onError={() => setImageError(true)}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
       ) : (
-        <div className="relative w-full h-52 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 flex flex-col items-center justify-center">
-          <ImageOff className="w-10 h-10 text-gray-400 dark:text-gray-600 mb-2" strokeWidth={1} />
+        <div className="relative w-full h-52 bg-gray-50 dark:bg-gray-900 border-b border-light-border/50 dark:border-dark-border/50 flex flex-col items-center justify-center">
+          <ImageOff className="w-10 h-10 text-gray-300 dark:text-gray-700 mb-2" strokeWidth={1} />
         </div>
       )}
       <div className="p-6 flex flex-col flex-grow">
@@ -84,7 +82,7 @@ const PostCard = ({ post }) => {
           </a>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 };
 

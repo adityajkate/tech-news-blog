@@ -1,22 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Newspaper } from 'lucide-react';
 import { fetchSources } from '../services/api';
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.05
-    }
-  }
-};
-
-const item = {
-  hidden: { opacity: 0, scale: 0.9 },
-  show: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } }
-};
 
 const SourceFilter = ({ onSourceSelect, selectedSource }) => {
   const [sources, setSources] = useState(['TechCrunch', 'HackerNews', 'Wired', 'TheVerge', 'ArsTechnica']);
@@ -50,45 +34,34 @@ const SourceFilter = ({ onSourceSelect, selectedSource }) => {
         <Newspaper size={16} className="text-light-accent dark:text-dark-accent" />
         Top Sources
       </h3>
-      <motion.div 
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="flex flex-wrap gap-2"
-      >
-        <motion.button
-          variants={item}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-all duration-200 ${
+      <div className="flex flex-wrap gap-2">
+        <button
+          className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 hover:-translate-y-0.5 transform ${
             selectedSource === ''
-              ? 'bg-light-accent dark:bg-dark-accent text-white border-transparent shadow-md shadow-light-accent/20 dark:shadow-dark-accent/20'
-              : 'bg-light-surface dark:bg-dark-surface text-light-text-secondary dark:text-dark-text-secondary border-light-border dark:border-dark-border hover:border-light-accent/50 dark:hover:border-dark-accent/50 hover:text-light-text-primary dark:hover:text-dark-text-primary'
+              ? 'bg-light-accent dark:bg-dark-accent text-white shadow-md shadow-light-accent/20 dark:shadow-dark-accent/20'
+              : 'bg-light-surface dark:bg-dark-surface text-light-text-secondary dark:text-dark-text-secondary border border-light-border dark:border-dark-border hover:border-light-accent/50 dark:hover:border-dark-accent/50 hover:text-light-text-primary dark:hover:text-dark-text-primary'
           }`}
           onClick={() => onSourceSelect('')}
         >
           All Sources
-        </motion.button>
+        </button>
         {sources.map((sourceObj) => {
           const sourceName = typeof sourceObj === 'string' ? sourceObj : (sourceObj.name || sourceObj._id);
           return (
-            <motion.button
-              variants={item}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               key={sourceName}
-              className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-all duration-200 ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 hover:-translate-y-0.5 transform ${
                 selectedSource === sourceName
-                  ? 'bg-light-accent dark:bg-dark-accent text-white border-transparent shadow-md shadow-light-accent/20 dark:shadow-dark-accent/20'
-                  : 'bg-light-surface dark:bg-dark-surface text-light-text-secondary dark:text-dark-text-secondary border-light-border dark:border-dark-border hover:border-light-accent/50 dark:hover:border-dark-accent/50 hover:text-light-text-primary dark:hover:text-dark-text-primary'
+                  ? 'bg-light-accent dark:bg-dark-accent text-white shadow-md shadow-light-accent/20 dark:shadow-dark-accent/20'
+                  : 'bg-light-surface dark:bg-dark-surface text-light-text-secondary dark:text-dark-text-secondary border border-light-border dark:border-dark-border hover:border-light-accent/50 dark:hover:border-dark-accent/50 hover:text-light-text-primary dark:hover:text-dark-text-primary'
               }`}
               onClick={() => handleSourceClick(sourceName)}
             >
               {sourceName}
-            </motion.button>
+            </button>
           )
         })}
-      </motion.div>
+      </div>
     </div>
   );
 };

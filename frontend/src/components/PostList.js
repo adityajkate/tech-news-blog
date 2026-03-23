@@ -2,22 +2,6 @@ import React from 'react';
 import PostCard from './PostCard';
 import { Pagination } from './ui/Pagination';
 import { useBlog } from '../contexts/BlogContext';
-import { motion } from 'framer-motion';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-};
 
 const SkeletonCard = () => (
   <div className="bg-light-surface/80 dark:bg-dark-surface/80 border border-light-border/50 dark:border-dark-border/50 rounded-2xl overflow-hidden animate-pulse shadow-sm">
@@ -59,11 +43,7 @@ const PostList = ({ pagination, onPageChange }) => {
 
   if (error) {
     return (
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center justify-center py-16 px-4 bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30"
-      >
+      <div className="flex flex-col items-center justify-center py-16 px-4 bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -84,17 +64,13 @@ const PostList = ({ pagination, onPageChange }) => {
         <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary text-center max-w-md">
           {error}
         </p>
-      </motion.div>
+      </div>
     );
   }
 
   if (!posts || posts.length === 0) {
     return (
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center justify-center py-20 px-4 bg-light-surface/50 dark:bg-dark-surface/50 rounded-2xl border border-light-border/50 dark:border-dark-border/50 backdrop-blur-sm"
-      >
+      <div className="flex flex-col items-center justify-center py-20 px-4 bg-light-surface/50 dark:bg-dark-surface/50 rounded-2xl border border-light-border/50 dark:border-dark-border/50 backdrop-blur-sm">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -115,24 +91,17 @@ const PostList = ({ pagination, onPageChange }) => {
         <p className="text-base text-light-text-secondary dark:text-dark-text-secondary">
           Try adjusting your filters or check back later.
         </p>
-      </motion.div>
+      </div>
     );
   }
 
   return (
     <div className="space-y-12">
-      <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {posts.map((post) => (
-          <motion.div key={post._id} variants={itemVariants}>
-            <PostCard post={post} />
-          </motion.div>
+          <PostCard key={post._id} post={post} />
         ))}
-      </motion.div>
+      </div>
 
       <Pagination pagination={pagination} onPageChange={onPageChange} />
     </div>

@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState('');
@@ -35,14 +34,12 @@ const SearchBar = ({ onSearch }) => {
         onChange={handleChange}
       />
       <div className="absolute inset-y-0 right-2 flex items-center">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+        <button
           type="submit"
-          className="px-5 py-2.5 bg-light-text-primary dark:bg-dark-text-primary text-light-bg dark:text-dark-bg text-sm font-semibold rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+          className="px-5 py-2.5 bg-light-text-primary dark:bg-dark-text-primary text-light-bg dark:text-dark-bg text-sm font-semibold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transform transition-all"
         >
           Search
-        </motion.button>
+        </button>
       </div>
     </form>
   );
