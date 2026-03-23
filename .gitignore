@@ -49,7 +49,9 @@ coverage/
 Thumbs.db
 
 # Claude temporary files
-.claude/projects/
+.claude/
+.specify/
+CLAUDE.md
 *.output
 
 # Frontend specific
@@ -67,8 +69,6 @@ backend/logs/
 specs/
 history/
 
-# Claude settings
-.claude/settings.local.json
 
 # Research files
 research-*.md
