@@ -1,0 +1,46 @@
+{
+  "name": "tech-news-blog-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for automated tech news blog",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint src/ --ext .js,.jsx"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.9",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.2",
+    "react-scripts": "^5.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "autoprefixer": "^10.4.27",
+    "eslint": "^8.57.1",
+    "postcss": "^8.5.8",
+    "react-app-rewired": "^2.2.1",
+    "tailwindcss": "^3.4.19"
+  }
+}

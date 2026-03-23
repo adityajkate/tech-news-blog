@@ -1,0 +1,42 @@
+{
+  "name": "tech-news-blog-backend",
+  "version": "1.0.0",
+  "description": "Backend API for automated tech news blog with AI-generated content",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed": "node scripts/seed.js",
+    "lint": "eslint src/ --ext .js",
+    "test": "jest"
+  },
+  "keywords": [
+    "tech",
+    "news",
+    "blog",
+    "ai",
+    "gemini",
+    "rss"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.13.6",
+    "cheerio": "^1.2.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "fuzzball": "^2.2.3",
+    "mongoose": "^9.3.1",
+    "node-cron": "^4.2.1",
+    "rss-parser": "^3.13.0",
+    "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "eslint": "^10.1.0",
+    "jest": "^30.3.0",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.2.2"
+  }
+}
