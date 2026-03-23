@@ -48,8 +48,7 @@ const postSchema = new mongoose.Schema({
   },
   source: {
     type: String,
-    required: true,
-    enum: ['TechCrunch', 'HackerNews', 'Wired']
+    required: true
   },
   contentHash: {
     type: String,

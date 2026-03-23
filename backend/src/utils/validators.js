@@ -23,9 +23,8 @@ const validatePagination = (page, limit) => {
 
 // Validate source parameter
 const validateSource = (source) => {
-  const validSources = ['TechCrunch', 'HackerNews', 'Wired'];
-  if (source && !validSources.includes(source)) {
-    throw new Error(`Source must be one of: ${validSources.join(', ')}`);
+  if (typeof source !== 'string' && source !== undefined && source !== null) {
+    throw new Error('Source must be a string');
   }
   return source;
 };
