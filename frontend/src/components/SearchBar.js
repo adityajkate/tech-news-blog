@@ -1,65 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Search } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState('');
-  const [debounceTimer, setDebounceTimer] = useState(null);
+
+  // Use useEffect for debouncing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onSearch(query);
+    }, 400); // 400ms debounce
+    return () => clearTimeout(timer);
+  }, [query, onSearch]);
 
   const handleChange = (e) => {
-    const value = e.target.value;
-    setQuery(value);
-
-    // Clear existing timer
-    if (debounceTimer) {
-      clearTimeout(debounceTimer);
-    }
-
-    // Set new timer for debounced search (300ms)
-    const timer = setTimeout(() => {
-      onSearch(value);
-    }, 300);
-
-    setDebounceTimer(timer);
+    setQuery(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (debounceTimer) {
-      clearTimeout(debounceTimer);
-    }
     onSearch(query);
   };
 
   return (
-    <form className="flex gap-2" onSubmit={handleSubmit}>
-      <div className="relative flex-grow">
-        <input
-          type="text"
-          className="w-full px-4 py-2 pl-10 text-sm border border-light-border dark:border-dark-border rounded-lg bg-light-surface dark:bg-dark-surface text-light-text-primary dark:text-dark-text-primary placeholder-light-text-secondary dark:placeholder-dark-text-secondary focus:outline-none focus:ring-2 focus:ring-light-accent dark:focus:ring-dark-accent"
-          placeholder="Search tech news..."
-          value={query}
-          onChange={handleChange}
-        />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-light-text-secondary dark:text-dark-text-secondary"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-          />
-        </svg>
+    <form className="relative group w-full" onSubmit={handleSubmit}>
+      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-light-text-secondary dark:text-dark-text-secondary group-focus-within:text-light-accent dark:group-focus-within:text-dark-accent transition-colors">
+        <Search size={20} />
       </div>
-      <button
-        type="submit"
-        className="px-4 py-2 text-sm font-medium text-white bg-light-accent dark:bg-dark-accent rounded-lg hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-light-accent dark:focus:ring-dark-accent focus:ring-offset-2 focus:ring-offset-light-bg dark:focus:ring-offset-dark-bg"
-      >
-        Search
-      </button>
+      <input
+        type="text"
+        className="w-full pl-12 pr-24 py-4 md:py-5 bg-white dark:bg-black/40 border border-light-border dark:border-dark-border rounded-2xl text-light-text-primary dark:text-dark-text-primary placeholder-light-text-secondary/70 dark:placeholder-dark-text-secondary/70 focus:outline-none focus:ring-2 focus:ring-light-accent/50 dark:focus:ring-dark-accent/50 shadow-sm focus:shadow-md transition-all text-base sm:text-lg"
+        placeholder="What kind of tech news are you looking for?"
+        value={query}
+        onChange={handleChange}
+      />
+      <div className="absolute inset-y-0 right-2 flex items-center">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          type="submit"
+          className="px-5 py-2.5 bg-light-text-primary dark:bg-dark-text-primary text-light-bg dark:text-dark-bg text-sm font-semibold rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+        >
+          Search
+        </motion.button>
+      </div>
     </form>
   );
 };

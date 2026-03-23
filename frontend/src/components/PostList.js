@@ -2,25 +2,43 @@ import React from 'react';
 import PostCard from './PostCard';
 import { Pagination } from './ui/Pagination';
 import { useBlog } from '../contexts/BlogContext';
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
 
 const SkeletonCard = () => (
-  <div className="bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg overflow-hidden animate-pulse">
-    <div className="w-full h-48 bg-gray-200 dark:bg-gray-700" />
-    <div className="p-5 space-y-3">
-      <div className="flex justify-between">
-        <div className="h-3 w-20 bg-gray-200 dark:bg-gray-700 rounded" />
-        <div className="h-3 w-32 bg-gray-200 dark:bg-gray-700 rounded" />
+  <div className="bg-light-surface/80 dark:bg-dark-surface/80 border border-light-border/50 dark:border-dark-border/50 rounded-2xl overflow-hidden animate-pulse shadow-sm">
+    <div className="w-full h-52 bg-gray-200/50 dark:bg-gray-700/50" />
+    <div className="p-6 space-y-4">
+      <div className="flex justify-between items-center">
+        <div className="h-3 w-20 bg-gray-200 dark:bg-gray-700 rounded-full" />
+        <div className="flex gap-2">
+          <div className="h-3 w-16 bg-gray-200 dark:bg-gray-700 rounded-full" />
+          <div className="h-3 w-16 bg-gray-200 dark:bg-gray-700 rounded-full" />
+        </div>
       </div>
-      <div className="h-5 w-3/4 bg-gray-200 dark:bg-gray-700 rounded" />
-      <div className="h-5 w-full bg-gray-200 dark:bg-gray-700 rounded" />
-      <div className="space-y-2">
-        <div className="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded" />
-        <div className="h-3 w-5/6 bg-gray-200 dark:bg-gray-700 rounded" />
+      <div className="h-6 w-3/4 bg-gray-200 dark:bg-gray-700 rounded-md" />
+      <div className="space-y-2 pt-2">
+        <div className="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-md" />
+        <div className="h-3 w-5/6 bg-gray-200 dark:bg-gray-700 rounded-md" />
+        <div className="h-3 w-4/6 bg-gray-200 dark:bg-gray-700 rounded-md" />
       </div>
-      <div className="flex gap-2">
-        <div className="h-6 w-16 bg-gray-200 dark:bg-gray-700 rounded" />
-        <div className="h-6 w-20 bg-gray-200 dark:bg-gray-700 rounded" />
-        <div className="h-6 w-14 bg-gray-200 dark:bg-gray-700 rounded" />
+      <div className="flex gap-2 pt-4 mt-auto">
+        <div className="h-5 w-16 bg-gray-200 dark:bg-gray-700 rounded-full" />
+        <div className="h-5 w-20 bg-gray-200 dark:bg-gray-700 rounded-full" />
       </div>
     </div>
   </div>
@@ -31,7 +49,7 @@ const PostList = ({ pagination, onPageChange }) => {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {[...Array(6)].map((_, i) => (
           <SkeletonCard key={i} />
         ))}
@@ -41,7 +59,11 @@ const PostList = ({ pagination, onPageChange }) => {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 px-4">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex flex-col items-center justify-center py-16 px-4 bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -59,23 +81,27 @@ const PostList = ({ pagination, onPageChange }) => {
         <p className="text-lg font-medium text-light-text-primary dark:text-dark-text-primary mb-2">
           Error loading posts
         </p>
-        <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary">
+        <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary text-center max-w-md">
           {error}
         </p>
-      </div>
+      </motion.div>
     );
   }
 
   if (!posts || posts.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 px-4">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex flex-col items-center justify-center py-20 px-4 bg-light-surface/50 dark:bg-dark-surface/50 rounded-2xl border border-light-border/50 dark:border-dark-border/50 backdrop-blur-sm"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-12 h-12 text-light-text-secondary dark:text-dark-text-secondary mb-4"
+          className="w-16 h-16 text-light-text-secondary dark:text-dark-text-secondary mb-4 opacity-50"
         >
           <path
             strokeLinecap="round"
@@ -83,23 +109,30 @@ const PostList = ({ pagination, onPageChange }) => {
             d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
           />
         </svg>
-        <p className="text-lg font-medium text-light-text-primary dark:text-dark-text-primary mb-2">
+        <p className="text-xl font-medium text-light-text-primary dark:text-dark-text-primary mb-2">
           No posts found
         </p>
-        <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary">
+        <p className="text-base text-light-text-secondary dark:text-dark-text-secondary">
           Try adjusting your filters or check back later.
         </p>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="space-y-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="space-y-12">
+      <motion.div 
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {posts.map((post) => (
-          <PostCard key={post._id} post={post} />
+          <motion.div key={post._id} variants={itemVariants}>
+            <PostCard post={post} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       <Pagination pagination={pagination} onPageChange={onPageChange} />
     </div>
