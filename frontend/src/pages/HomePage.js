@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PostList from '../components/PostList';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -13,15 +13,11 @@ import { useBlog } from '../contexts/BlogContext';
 const HomePage = () => {
   const { pagination, goToPage } = usePosts();
   const { performSearch } = useSearch();
-  const { filters, setFilters, fetchPosts } = useBlog();
-
-  // Refetch when filters change
-  useEffect(() => {
-    fetchPosts({ page: 1 });
-  }, [filters, fetchPosts]);
+  const { filters, setFilters } = useBlog();
 
   const handleSearch = (query) => {
     performSearch(query);
+    goToPage(1);
   };
 
   const handleTagSelect = (tagName) => {
@@ -30,10 +26,12 @@ const HomePage = () => {
       : [...filters.tags, tagName];
 
     setFilters({ ...filters, tags: newTags });
+    goToPage(1);
   };
 
   const handleSourceSelect = (source) => {
     setFilters({ ...filters, source });
+    goToPage(1);
   };
 
   return (

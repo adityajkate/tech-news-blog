@@ -45,12 +45,6 @@ export const BlogProvider = ({ children }) => {
     }
   }, [filters, searchQuery]);
 
-  // Only fetch on initial mount
-  useEffect(() => {
-    fetchPosts({ page: 1 });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const value = {
     posts,
     setPosts,
