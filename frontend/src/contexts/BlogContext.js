@@ -9,7 +9,7 @@ export const BlogProvider = ({ children }) => {
     tags: []
   });
   const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); // Initialized to true to prevent skeleton flicker
   const [error, setError] = useState(null);
 
   const fetchPosts = useCallback(async (params = {}) => {
