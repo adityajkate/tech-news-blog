@@ -13,13 +13,20 @@ export const BlogProvider = ({ children }) => {
   const filtersRef = useRef(filters);
   const searchQueryRef = useRef(searchQuery);
 
-  // Keep refs in sync silently (no re-render)
   filtersRef.current = filters;
   searchQueryRef.current = searchQuery;
 
-  // Stable fetchPosts — never changes identity, reads latest state from refs
+  // Track the current in-flight request so we can cancel stale ones
+  const currentRequestId = useRef(0);
+
   const fetchPosts = useCallback(async (params = {}) => {
-    setLoading(true);
+    // Increment request ID — any older in-flight request becomes stale
+    const requestId = ++currentRequestId.current;
+
+    // Only show loading skeletons if there are no posts yet (first load)
+    if (posts.length === 0) {
+      setLoading(true);
+    }
     setError(null);
 
     try {
@@ -39,17 +46,26 @@ export const BlogProvider = ({ children }) => {
       if (!response.ok) throw new Error('Failed to fetch posts');
 
       const data = await response.json();
-      setPosts(data.posts);
-      return data;
+
+      // Only update state if this is still the latest request
+      if (requestId === currentRequestId.current) {
+        setPosts(data.posts);
+        setLoading(false);
+        return data;
+      }
+      return null;
 
     } catch (err) {
-      setError(err.message);
-      console.error('Error fetching posts:', err);
+      if (requestId === currentRequestId.current) {
+        setError(err.message);
+        setLoading(false);
+      }
       return null;
-    } finally {
-      setLoading(false);
     }
-  }, []); // ← empty deps: fetchPosts is now truly stable
+  // posts.length is read via closure but we intentionally exclude it
+  // from deps to keep fetchPosts identity stable
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const value = {
     posts, setPosts,

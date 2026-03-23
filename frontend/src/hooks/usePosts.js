@@ -8,12 +8,17 @@ const usePosts = (initialPage = 1, initialLimit = 20) => {
   const [pagination, setPagination] = useState(null);
 
   useEffect(() => {
+    let cancelled = false;
+
     const loadPosts = async () => {
       const data = await fetchPosts({ page, limit });
-      if (data) setPagination(data.pagination);
+      // cancelled = true when StrictMode unmounts early — prevents stale state update 
+      if (!cancelled && data) setPagination(data.pagination);
     };
+
     loadPosts();
-  // filters + searchQuery trigger page re-fetch when they change
+
+    return () => { cancelled = true; };
   }, [page, limit, fetchPosts, filters, searchQuery]);
 
   const nextPage = () => { if (pagination?.hasNextPage) setPage(p => p + 1); };
