@@ -17,27 +17,23 @@ const HomePage = () => {
 
   const handleSearch = (query) => {
     performSearch(query);
-    goToPage(1);
   };
 
   const handleTagSelect = (tagName) => {
     const newTags = filters.tags.includes(tagName)
       ? filters.tags.filter(t => t !== tagName)
       : [...filters.tags, tagName];
-
     setFilters({ ...filters, tags: newTags });
-    goToPage(1);
   };
 
   const handleSourceSelect = (source) => {
     setFilters({ ...filters, source });
-    goToPage(1);
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-light-bg dark:bg-dark-bg selection:bg-light-accent/30 selection:text-light-accent dark:selection:bg-dark-accent/30 dark:selection:text-dark-accent">
       <Navbar />
-      <main className="flex-grow pt-28 pb-12 sm:pb-16 relative">
+      <main className="flex-grow pt-28 pb-12 sm:pb-16">
         <Container>
           <div className="mb-12 sm:mb-16 text-center max-w-2xl mx-auto">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-light-text-primary dark:text-dark-text-primary mb-4 tracking-tighter">
@@ -51,14 +47,8 @@ const HomePage = () => {
           <div className="space-y-6 mb-12 bg-light-surface dark:bg-dark-surface p-6 sm:p-8 rounded-2xl border border-light-border dark:border-dark-border shadow-sm">
             <SearchBar onSearch={handleSearch} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-              <SourceFilter
-                onSourceSelect={handleSourceSelect}
-                selectedSource={filters.source}
-              />
-              <TagFilter
-                onTagSelect={handleTagSelect}
-                selectedTags={filters.tags}
-              />
+              <SourceFilter onSourceSelect={handleSourceSelect} selectedSource={filters.source} />
+              <TagFilter onTagSelect={handleTagSelect} selectedTags={filters.tags} />
             </div>
           </div>
 
