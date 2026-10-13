@@ -17,7 +17,7 @@
 
 <hr />
 
-### ✨ Features
+### ✨ Features - 
 - 🔄 **Automated** &mdash; Continuous fetch from TechCrunch, HackerNews, Wired, & more.
 - 🧠 **Smart Insights** &mdash; Gemini AI distills hours of reading into pure signal.
 - 🎨 **Minimalist Aesthetic** &mdash; Smooth Framer Motion animations and glassmorphic UI.
