@@ -35,12 +35,5 @@
 
 <br />
 
-### 🚀 Quick Start
 
-Ensure you have Node.js 18+ and set up your `.env` variables (`GEMINI_API_KEY`, etc).
 
-**1. Boot the Backend**
-```bash
-cd backend
-npm install
-npm run dev
