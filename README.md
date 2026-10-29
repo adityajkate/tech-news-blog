@@ -6,7 +6,7 @@
   <img src="https://readme-typing-svg.demolab.com?font=Geist&weight=500&size=20&duration=3000&pause=1000&color=0070F3&center=true&vCenter=true&width=500&lines=Automated+Tech+News;AI-Powered+Insights;Curated.+Minimal.+Smart." alt="Typing SVG" />
 </p>
 
-> An ultra-minimalist, AI-powered tech news aggregator that curates the best articles from top sources and distills them into bite-sized, intelligent insights using Gemini.
+> An ultra-minimalist, AI-powered tech news aggregator that curates the best articles from top sources and distills them into bite-sized, intelligent insights using Gemini/GPT.
 
 <br />
 
